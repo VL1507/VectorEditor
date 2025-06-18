@@ -1,1 +1,1 @@
-# vector_editor
+# Векторный редактор на C# WinForms
