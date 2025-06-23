@@ -6,11 +6,15 @@ public partial class MainForm : Form
 {
     private Color _fillColor = Color.Aqua;
     private Color _outlineColor = Color.Brown;
-    
     private int _outlineWidth;
 
     private List<Shape> _shapes = new List<Shape>();
     private Shape _selectedShape;
+    private Shape _currentShape;
+
+    private EditMode _editMode = EditMode.Stub;
+    private ShapeType _selectedShapeType = ShapeType.None;
+    private Point _startPoint;
 
     public MainForm()
     {
@@ -27,10 +31,8 @@ public partial class MainForm : Form
         invisibleLabel.Size = new Size(0, 0);
         invisibleLabel.TabStop = false;
         this.Controls.Add(invisibleLabel);
-
         this.ActiveControl = invisibleLabel;
     }
-
 
     private void InitColor()
     {
@@ -46,6 +48,12 @@ public partial class MainForm : Form
         {
             _fillColor = colorDialog1.Color;
             fillColorButton.BackColor = _fillColor;
+
+            if (_currentShape != null)
+            {
+                _currentShape._fillColor = _fillColor;
+                this.Invalidate();
+            }
         }
     }
 
@@ -55,11 +63,79 @@ public partial class MainForm : Form
         {
             _outlineColor = colorDialog2.Color;
             outlineColorButton.BackColor = _outlineColor;
+
+            if (_currentShape != null)
+            {
+                _currentShape._outlineColor = _outlineColor;
+                this.Invalidate();
+            }
         }
     }
 
     private void numericUpDown1_ValueChanged(object sender, EventArgs e)
     {
         _outlineWidth = (int)numericUpDown1.Value;
+        if (_currentShape != null)
+        {
+            _currentShape._outlineWidth = _outlineWidth;
+            this.Invalidate();
+        }
+    }
+
+    private void MainForm_Paint(object sender, PaintEventArgs e)
+    {
+        foreach (var shape in _shapes)
+        {
+            shape.Draw(e.Graphics);
+        }
+
+        if (_editMode == EditMode.Draw && _currentShape != null)
+        {
+            _currentShape.Draw(e.Graphics);
+        }
+    }
+
+    private void RectangleButton_Click(object sender, EventArgs e)
+    {
+        _selectedShapeType = ShapeType.Rectangle;
+        _editMode = EditMode.Stub;
+    }
+
+    private void MainForm_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (_editMode == EditMode.Draw)
+        {
+            if (_selectedShapeType == ShapeType.Rectangle)
+            {
+                int width = int.Abs(e.X - _startPoint.X);
+                int height = int.Abs(e.Y - _startPoint.Y);
+                _currentShape = new RectangleShape(_startPoint.X, _startPoint.Y, width, height);
+            }
+
+            _currentShape._fillColor = _fillColor;
+            _currentShape._outlineColor = _outlineColor;
+            _currentShape._outlineWidth = _outlineWidth;
+
+            this.Invalidate();
+        }
+    }
+
+    private void MainForm_MouseDown(object sender, MouseEventArgs e)
+    {
+        _startPoint = e.Location;
+        if (_selectedShapeType != ShapeType.None)
+        {
+            _editMode = EditMode.Draw;
+        }
+    }
+
+    private void MainForm_MouseUp(object sender, MouseEventArgs e)
+    {
+        if (_editMode == EditMode.Draw)
+        {
+            _editMode = EditMode.Stub;
+            _shapes.Add(_currentShape);
+            this.Invalidate();
+        }
     }
 }

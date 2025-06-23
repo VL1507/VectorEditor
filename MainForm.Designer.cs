@@ -32,7 +32,7 @@ partial class MainForm
         shapesGroupBox = new System.Windows.Forms.GroupBox();
         button4 = new System.Windows.Forms.Button();
         BezierButton = new System.Windows.Forms.Button();
-        button3 = new System.Windows.Forms.Button();
+        RectangleButton = new System.Windows.Forms.Button();
         button1 = new System.Windows.Forms.Button();
         button2 = new System.Windows.Forms.Button();
         outlineColorButton = new System.Windows.Forms.Button();
@@ -50,7 +50,7 @@ partial class MainForm
         // 
         shapesGroupBox.Controls.Add(button4);
         shapesGroupBox.Controls.Add(BezierButton);
-        shapesGroupBox.Controls.Add(button3);
+        shapesGroupBox.Controls.Add(RectangleButton);
         shapesGroupBox.Controls.Add(button1);
         shapesGroupBox.Controls.Add(button2);
         shapesGroupBox.Location = new System.Drawing.Point(0, 0);
@@ -82,16 +82,17 @@ partial class MainForm
         BezierButton.TabIndex = 4;
         BezierButton.UseVisualStyleBackColor = false;
         // 
-        // button3
+        // RectangleButton
         // 
-        button3.BackColor = System.Drawing.SystemColors.Window;
-        button3.BackgroundImage = global::VectorEditor.Properties.Resources.rectangle;
-        button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-        button3.Location = new System.Drawing.Point(0, 198);
-        button3.Name = "button3";
-        button3.Size = new System.Drawing.Size(50, 50);
-        button3.TabIndex = 7;
-        button3.UseVisualStyleBackColor = false;
+        RectangleButton.BackColor = System.Drawing.SystemColors.Window;
+        RectangleButton.BackgroundImage = global::VectorEditor.Properties.Resources.rectangle;
+        RectangleButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+        RectangleButton.Location = new System.Drawing.Point(0, 198);
+        RectangleButton.Name = "RectangleButton";
+        RectangleButton.Size = new System.Drawing.Size(50, 50);
+        RectangleButton.TabIndex = 7;
+        RectangleButton.UseVisualStyleBackColor = false;
+        RectangleButton.Click += RectangleButton_Click;
         // 
         // button1
         // 
@@ -166,6 +167,10 @@ partial class MainForm
         Controls.Add(groupBox1);
         Controls.Add(shapesGroupBox);
         Text = "Супер векторный редактор";
+        Paint += MainForm_Paint;
+        MouseDown += MainForm_MouseDown;
+        MouseMove += MainForm_MouseMove;
+        MouseUp += MainForm_MouseUp;
         shapesGroupBox.ResumeLayout(false);
         groupBox1.ResumeLayout(false);
         ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
@@ -174,7 +179,7 @@ partial class MainForm
 
     private System.Windows.Forms.Button button1;
     private System.Windows.Forms.Button button2;
-    private System.Windows.Forms.Button button3;
+    private System.Windows.Forms.Button RectangleButton;
     private System.Windows.Forms.Button button4;
 
     private System.Windows.Forms.NumericUpDown numericUpDown1;
