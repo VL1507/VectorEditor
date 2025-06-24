@@ -41,6 +41,7 @@ partial class MainForm
         groupBox1 = new System.Windows.Forms.GroupBox();
         numericUpDown1 = new System.Windows.Forms.NumericUpDown();
         colorDialog2 = new System.Windows.Forms.ColorDialog();
+        coordinatesLabel = new System.Windows.Forms.Label();
         shapesGroupBox.SuspendLayout();
         groupBox1.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
@@ -159,14 +160,24 @@ partial class MainForm
         numericUpDown1.Value = new decimal(new int[] { 1, 0, 0, 0 });
         numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
         // 
+        // coordinatesLabel
+        // 
+        coordinatesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
+        coordinatesLabel.Location = new System.Drawing.Point(0, 421);
+        coordinatesLabel.Name = "coordinatesLabel";
+        coordinatesLabel.Size = new System.Drawing.Size(263, 38);
+        coordinatesLabel.TabIndex = 5;
+        coordinatesLabel.Text = "Координаты мышки";
+        // 
         // MainForm
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(800, 450);
+        Controls.Add(coordinatesLabel);
         Controls.Add(groupBox1);
         Controls.Add(shapesGroupBox);
-        Text = "Супер векторный редактор";
+        Text = "\"Супер\" векторный редактор";
         Paint += MainForm_Paint;
         MouseDown += MainForm_MouseDown;
         MouseMove += MainForm_MouseMove;
@@ -176,6 +187,8 @@ partial class MainForm
         ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
         ResumeLayout(false);
     }
+
+    private System.Windows.Forms.Label coordinatesLabel;
 
     private System.Windows.Forms.Button button1;
     private System.Windows.Forms.Button button2;

@@ -6,5 +6,6 @@ public enum EditMode
     Creation = 1,
     Editing = 2,
     Draw,
-    Move
+    Move,
+    Select
 }

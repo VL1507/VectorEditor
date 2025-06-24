@@ -89,6 +89,12 @@ public partial class MainForm : Form
             shape.Draw(e.Graphics);
         }
 
+
+        if (_selectedShape != null)
+        {
+            _selectedShape.Select(e.Graphics);
+        }
+
         if (_editMode == EditMode.Draw && _currentShape != null)
         {
             _currentShape.Draw(e.Graphics);
@@ -103,13 +109,13 @@ public partial class MainForm : Form
 
     private void MainForm_MouseMove(object sender, MouseEventArgs e)
     {
+        coordinatesLabel.Text = $"Координаты мышки: {e.X}, {e.Y}";
+
         if (_editMode == EditMode.Draw)
         {
             if (_selectedShapeType == ShapeType.Rectangle)
             {
-                int width = int.Abs(e.X - _startPoint.X);
-                int height = int.Abs(e.Y - _startPoint.Y);
-                _currentShape = new RectangleShape(_startPoint.X, _startPoint.Y, width, height);
+                _currentShape = new RectangleShape(_startPoint.X, _startPoint.Y, e.X, e.Y);
             }
 
             _currentShape._fillColor = _fillColor;
@@ -118,15 +124,48 @@ public partial class MainForm : Form
 
             this.Invalidate();
         }
+
+        else if (_editMode == EditMode.Select && _selectedShape != null && e.Button == MouseButtons.Left)
+        {
+            int dx = e.X - _startPoint.X;
+            int dy = e.Y - _startPoint.Y;
+            _selectedShape.Move(dx, dy);
+            this.Invalidate();
+            _startPoint = e.Location;
+        }
     }
 
     private void MainForm_MouseDown(object sender, MouseEventArgs e)
     {
         _startPoint = e.Location;
+        _selectedShape = null;
+        
+        if (e.Button == MouseButtons.Right)
+        {
+            _selectedShape = null;
+            this.Invalidate(); 
+            return;
+        }
+        
+        
         if (_selectedShapeType != ShapeType.None)
         {
             _editMode = EditMode.Draw;
+            return;
         }
+
+        foreach (var shape in _shapes)
+        {
+            if (shape.Contains(e.Location))
+            {
+                shape._dotColor = Color.BlueViolet;
+                _editMode = EditMode.Select;
+                _selectedShape = shape;
+                this.Invalidate();
+                return;
+            }
+        }
+        
     }
 
     private void MainForm_MouseUp(object sender, MouseEventArgs e)
@@ -134,6 +173,7 @@ public partial class MainForm : Form
         if (_editMode == EditMode.Draw)
         {
             _editMode = EditMode.Stub;
+            _selectedShapeType = ShapeType.None;
             _shapes.Add(_currentShape);
             this.Invalidate();
         }
