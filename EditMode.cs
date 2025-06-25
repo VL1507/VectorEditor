@@ -1,11 +1,17 @@
 namespace VectorEditor;
 
+// режимы работы редактора
 public enum EditMode
 {
-    Stub = 0,
-    Creation = 1,
-    Editing = 2,
+    // Заглушка. Ничего не происходит
+    Stub,
+
+    // рисование новой фигуры
     Draw,
-    Move,
-    Select
+
+    // выделение фигуры
+    Select,
+
+    // поворот
+    Rotate,
 }

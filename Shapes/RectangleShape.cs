@@ -29,6 +29,7 @@ public class RectangleShape : Shape
 
     public override void Select(Graphics g)
     {
+        Draw(g);
         DrawDots(g);
     }
 
@@ -69,7 +70,7 @@ public class RectangleShape : Shape
         int x1 = end.X;
         int y1 = end.Y;
 
-        // Рисуем центральную линию
+        // Рисуем центральную линию (добавляем точки центральной линии в список)
         List<Point> linePoints = new List<Point>();
         bool steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
         if (steep)
@@ -108,8 +109,8 @@ public class RectangleShape : Shape
                 error += dx;
             }
         }
-
-        // Рисуем линию с заданной шириной
+        
+        // По основным точкам находим дополнительные и рисуем все.
         foreach (Point point in linePoints)
         {
             for (int offsetX = -lineWidth / 2; offsetX <= lineWidth / 2; offsetX++)

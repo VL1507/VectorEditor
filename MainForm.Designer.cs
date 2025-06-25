@@ -42,6 +42,7 @@ partial class MainForm
         numericUpDown1 = new System.Windows.Forms.NumericUpDown();
         colorDialog2 = new System.Windows.Forms.ColorDialog();
         coordinatesLabel = new System.Windows.Forms.Label();
+        editModeLabel = new System.Windows.Forms.Label();
         shapesGroupBox.SuspendLayout();
         groupBox1.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
@@ -169,16 +170,27 @@ partial class MainForm
         coordinatesLabel.TabIndex = 5;
         coordinatesLabel.Text = "Координаты мышки";
         // 
+        // editModeLabel
+        // 
+        editModeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
+        editModeLabel.Location = new System.Drawing.Point(660, 428);
+        editModeLabel.Name = "editModeLabel";
+        editModeLabel.Size = new System.Drawing.Size(149, 31);
+        editModeLabel.TabIndex = 6;
+        editModeLabel.Text = "Режим: ";
+        // 
         // MainForm
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(800, 450);
+        Controls.Add(editModeLabel);
         Controls.Add(coordinatesLabel);
         Controls.Add(groupBox1);
         Controls.Add(shapesGroupBox);
         Text = "\"Супер\" векторный редактор";
         Paint += MainForm_Paint;
+        KeyDown += MainForm_KeyDown;
         MouseDown += MainForm_MouseDown;
         MouseMove += MainForm_MouseMove;
         MouseUp += MainForm_MouseUp;
@@ -187,6 +199,8 @@ partial class MainForm
         ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
         ResumeLayout(false);
     }
+
+    private System.Windows.Forms.Label editModeLabel;
 
     private System.Windows.Forms.Label coordinatesLabel;
 
